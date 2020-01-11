@@ -15,23 +15,25 @@ var connection = mysql.createConnection({
 
 connection.connect((err) => {
   if (err) throw err;
-  console.log("Connected as id: " + connection.threadId);
-  inquirer
-    .prompt([
-      // Here we give the user a list to choose from.
-      {
-        type: "list",
-        message: "What would you like to do?",
-        choices: [
-          "See songs by an artist?",
-          "See repeated artists?",
-          "See all songs between two dates?",
-          "Find a specific song?"
-        ],
-        name: "toDo"
-      }
-    ])
-    .then(function(inquirerResponse) {
-      console.log("You chose to : " + inquirerResponse.toDo);
-    });
+  displayStore();
 });
+function displayStore() {
+  var query = connection.query("select * from products", function(err, res) {
+    if (err) throw err;
+    let values = [];
+    for (var i = 0; i < res.length; i++) {
+      values.push({
+        ID: res[i].id,
+        Product: res[i].product_name,
+        Department: res[i].department_name,
+        Price: res[i].price,
+        Stock: res[i].stock_quantity
+      });
+    }
+    console.table(values);
+  });
+  endConnection();
+}
+function endConnection() {
+  connection.end();
+}
