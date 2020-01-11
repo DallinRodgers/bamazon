@@ -31,3 +31,5 @@ INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("Frozen 2", "Movies", 20, 8);
 INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("The Joker", "Movies", 20, 14);
+
+SELECT * FROM products;
