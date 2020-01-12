@@ -18,19 +18,19 @@ VALUES ("Hot Dogs", "Food", 5.32, 35);
 INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("TV", "Electronics", 499.99, 15);
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("PlayStation 4 Pro", "Electronics", 399, 18);
+VALUES ("PlayStation 4 Pro", "Electronics", 399.99, 18);
 INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("Bose Headphones", "Electronics", 212.97, 25);
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("Chair", "Furniture", 400, 10);
+VALUES ("Chair", "Furniture", 400.00, 10);
 INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("Sofa", "Furniture", 700.99, 10);
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("Table", "Furniture", 250, 13);
+VALUES ("Table", "Furniture", 250.00, 13);
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("Frozen 2", "Movies", 20, 8);
+VALUES ("Frozen 2", "Movies", 20.00, 8);
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("The Joker", "Movies", 20, 14);
+VALUES ("The Joker", "Movies", 20.00, 14);
 
 SELECT * FROM products;
 
