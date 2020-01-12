@@ -43,7 +43,6 @@ function displayStore() {
 function buyItems() {
   inquirer
     .prompt([
-      // Here we give the user a list to choose from.
       {
         type: "input",
         message: "Enter the ID of the product you wish buy.",
@@ -56,29 +55,31 @@ function buyItems() {
       }
     ])
     .then(function(inquirerResponse) {
-      console.log("You chose to : " + inquirerResponse.productID);
-      console.log("You chose to : " + inquirerResponse.productCount);
       checkItem(inquirerResponse.productID, inquirerResponse.productCount);
     });
 }
 function checkItem(thisItem, thisMuch) {
-  console.log(thisItem);
   var query = "SELECT stock_quantity FROM products WHERE id = ?";
   connection.query(query, thisItem, function(err, res) {
     if (err) throw err;
-    // Place products into an array
+    // Store stock count from database
     let inStock = res[0].stock_quantity;
-    console.log(`This is how much their is: ${inStock}`);
+    // Check for enough stock
     if (thisMuch < inStock) {
-      console.log("There is enough");
-      updateStock();
+      const newStockCount = inStock - thisMuch;
+      updateStock(thisItem, newStockCount);
     } else {
       console.log("Insufficient quantity!");
       endConnection();
     }
   });
 }
-function updateStock() {
+function updateStock(thisItemUpdate, thisMuchUpdate) {
+  var query = "UPDATE products SET stock_quantity = ? WHERE id = ?";
+  connection.query(query, [thisMuchUpdate, thisItemUpdate], function(err, res) {
+    if (err) throw err;
+    console.log("The stock has been changed");
+  });
   endConnection();
 }
 function endConnection() {
