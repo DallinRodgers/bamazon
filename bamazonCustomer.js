@@ -6,6 +6,8 @@ require("dotenv").config();
 
 // Password from .env file
 const password = process.env.DB_PASS;
+let thisItem;
+let thisMuch;
 
 // Connect to MYSQL Database
 var connection = mysql.createConnection({
@@ -31,7 +33,7 @@ function displayStore() {
         ID: res[i].id,
         Product: res[i].product_name,
         Department: res[i].department_name,
-        Price: res[i].price,
+        Price: res[i].price.toFixed(2),
         Stock: res[i].stock_quantity
       });
     }
@@ -55,7 +57,9 @@ function buyItems() {
       }
     ])
     .then(function(inquirerResponse) {
-      checkItem(inquirerResponse.productID, inquirerResponse.productCount);
+      thisItem = inquirerResponse.productID;
+      thisMuch = inquirerResponse.productCount;
+      checkItem(thisItem, thisMuch);
     });
 }
 function checkItem(thisItem, thisMuch) {
@@ -78,9 +82,20 @@ function updateStock(thisItemUpdate, thisMuchUpdate) {
   var query = "UPDATE products SET stock_quantity = ? WHERE id = ?";
   connection.query(query, [thisMuchUpdate, thisItemUpdate], function(err, res) {
     if (err) throw err;
-    console.log("The stock has been changed");
+    showCost();
   });
-  endConnection();
+}
+function showCost() {
+  var query = "SELECT price FROM products WHERE id = ?";
+  connection.query(query, thisItem, function(err, res) {
+    if (err) throw err;
+    // Store price from database
+    const price = res[0].price;
+    // Get total cost
+    const cost = price * thisMuch;
+    console.log(`Your total is: $${cost.toFixed(2)}`);
+    endConnection();
+  });
 }
 function endConnection() {
   connection.end();
