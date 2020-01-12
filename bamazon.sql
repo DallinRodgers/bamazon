@@ -33,3 +33,7 @@ INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("The Joker", "Movies", 20, 14);
 
 SELECT * FROM products;
+
+SELECT stock_quantity FROM products WHERE id = 2;
+
+UPDATE products SET stock_quantity = 30 WHERE id = 2;
